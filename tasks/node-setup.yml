@@ -1,0 +1,6 @@
+- name: Test task
+  shell: mkdir mynewdir
+  tags:
+    - install
+    - node
+  
