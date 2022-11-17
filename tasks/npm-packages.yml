@@ -1,0 +1,14 @@
+- name: Install Yarn
+  npm:
+    name: yarn
+    global: yes
+  tags:
+    - install
+    - node
+- name: Install Typescript
+  npm:
+    name: typescript
+    global: yes
+  tags:
+    - install
+    - node

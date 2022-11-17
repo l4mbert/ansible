@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+# Homebrew and python3
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+brew install python3
+
+# Ansible - taken from https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html
+python3 -m pip install --user ansible
+python3 -m pip install --upgrade --user ansible

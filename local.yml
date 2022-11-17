@@ -1,4 +1,14 @@
 - hosts: localhost
+  pre_tasks:
+    - name: Ensuring Homebrew Is Installed
+      stat:
+        path: /usr/local/bin/brew
+      register: homebrew_check
+    - name: Fail If Homebrew Is Not Installed
+      fail:
+        msg: Homebrew is missing... Install Homebrew
+      when:
+        - not homebrew_check.stat.exists
   tasks:
     - include: tasks/node-setup.yml
-    
+    - include: tasks/npm-packages.yml
