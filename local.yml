@@ -12,3 +12,4 @@
   tasks:
     - include: tasks/node-setup.yml
     - include: tasks/npm-packages.yml
+    - include: tasks/nvim-setup.yml

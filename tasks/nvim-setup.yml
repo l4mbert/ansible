@@ -1,0 +1,13 @@
+- name: Remove neovim
+  shell: rm -rf ~/neovim
+  tags:
+    - install
+    - neovim
+- name: Install nvim via Homebrew
+  homebrew:
+    name: "neovim"
+    update_homebrew: yes
+  tags: 
+    - install
+    - neovim
+  
