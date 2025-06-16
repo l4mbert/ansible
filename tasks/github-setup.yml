@@ -1,0 +1,20 @@
+---
+- name: Setup Git with Homebrew and configure it
+  hosts: localhost
+  vars:
+    git_user_name: "l4mbert"
+    git_user_email: "chris@lamberjack.me"
+  tasks:
+    - name: Install Git via Homebrew
+      homebrew:
+        name: git
+        state: present
+      tags: git_install
+
+    - name: Configure Git user name
+      command: git config --global user.name "{{ git_user_name }}"
+      tags: git_config
+
+    - name: Configure Git user email
+      command: git config --global user.email "{{ git_user_email }}"
+      tags: git_config

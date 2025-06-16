@@ -1,0 +1,13 @@
+- name: Install global NPM packages
+  hosts: localhost
+  tasks:
+    - name: Check if npm is installed
+      command: npm -v
+      register: npm_check
+      failed_when: npm_check.rc != 0
+      changed_when: false
+
+    - name: Install EAS CLI globally
+      npm:
+        name: eas-cli
+        global: yes

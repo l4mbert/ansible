@@ -1,6 +1,44 @@
-- name: Test task
-  shell: mkdir mynewdir
-  tags:
-    - install
-    - node
-  
+---
+- name: Install NVM and Node.js using Homebrew
+  hosts: localhost
+  connection: local
+  tasks:
+    - name: Install NVM via Homebrew
+      homebrew:
+        name: nvm
+        state: present
+
+    - name: Ensure NVM directory exists
+      file:
+        path: "{{ ansible_env.HOME }}/.nvm"
+        state: directory
+        mode: '0755'
+
+    - name: Add NVM configuration to zsh profile
+      lineinfile:
+        path: "{{ ansible_env.HOME }}/.zshrc"
+        line: |
+          export NVM_DIR="$HOME/.nvm"
+          [ -s "$(brew --prefix nvm)/nvm.sh" ] && \. "$(brew --prefix nvm)/nvm.sh"
+      register: nvm_profile
+      changed_when: nvm_profile.changed
+
+    - name: Source the zsh profile
+      shell: "source {{ ansible_env.HOME }}/.zshrc"
+      args:
+        executable: /bin/zsh
+
+    - name: Install Node.js v20.10.0 using NVM
+      shell: |
+        source {{ ansible_env.HOME }}/.zshrc
+        nvm install 20.10.0
+      args:
+        creates: "{{ ansible_env.HOME }}/.nvm/versions/node/v20.10.0"
+        executable: /bin/zsh
+
+    - name: Set Node.js v20.10.0 as the default version
+      shell: |
+        source {{ ansible_env.HOME }}/.zshrc
+        nvm alias default 20.10.0
+      args:
+        executable: /bin/zsh
